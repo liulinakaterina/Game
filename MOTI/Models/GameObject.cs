@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 
 namespace MOTI.Models
 {
-    class GameObject
+    public class GameObject
     {
+        public Point Position { get; set; }
+        public int ActualWidth { get; set; }
+        public int ActualHeigth { get; set; }
     }
 }

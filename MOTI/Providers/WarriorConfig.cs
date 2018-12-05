@@ -27,7 +27,7 @@ namespace MOTI.Providers
                     Power = 3,
                     Position = new Point(350, 400),
                     CurrentPosition = new Point(350, 400),
-                    ActualHeigh = 900,
+                    ActualHeigth = 900,
                     ActualWidth = 740
                 };
             }
@@ -44,7 +44,7 @@ namespace MOTI.Providers
                     Power = 3,
                     Position = new Point(700, 400),
                     CurrentPosition = new Point(700, 400),
-                    ActualHeigh = 1000,
+                    ActualHeigth = 1000,
                     ActualWidth = 900
                 };
             }
@@ -61,7 +61,7 @@ namespace MOTI.Providers
                     Power = 3,
                     Position = new Point(750, 200),
                     CurrentPosition = new Point(750, 200),
-                    ActualHeigh = 1100,
+                    ActualHeigth = 1100,
                     ActualWidth = 720
                 };
             }
@@ -78,7 +78,7 @@ namespace MOTI.Providers
                     Power = 3,
                     Position = new Point(350, 400),
                     CurrentPosition = new Point(350, 400),
-                    ActualHeigh = 700,
+                    ActualHeigth = 700,
                     ActualWidth = 900
                 };
             }
@@ -95,7 +95,7 @@ namespace MOTI.Providers
                     Power = 3,
                     Position = new Point(700, 400),
                     CurrentPosition = new Point(700, 400),
-                    ActualHeigh = 192,
+                    ActualHeigth = 192,
                     ActualWidth = 256
                 };
             }
@@ -112,7 +112,7 @@ namespace MOTI.Providers
                     Power = 3,
                     Position = new Point(750, 200),
                     CurrentPosition = new Point(750, 200),
-                    ActualHeigh = 960,
+                    ActualHeigth = 960,
                     ActualWidth = 900
                 };
             }
