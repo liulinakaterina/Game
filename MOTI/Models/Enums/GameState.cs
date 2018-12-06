@@ -4,7 +4,9 @@
     {
         Start,
         FirstPlayerTurn,
-        SeconndPlayerTurn,
+        FirstPlayerMoving,
+        SecondPlayerTurn,
+        SecondPlayerMoving,
         Fight,
         Result
     }

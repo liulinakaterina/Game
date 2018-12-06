@@ -48,7 +48,7 @@ namespace MOTI
                     break;
                 case GameState.FirstPlayerTurn:
                     break;
-                case GameState.SeconndPlayerTurn:
+                case GameState.SecondPlayerTurn:
                     break;
                 case GameState.Fight:
                     break;
@@ -64,11 +64,7 @@ namespace MOTI
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(background, mainFrame, Color.White);
-            this.DrawTowers();
-            this.DrawWarriors(gameField.Players[0]);
-            spriteBatch.End();
+            //my draw method
 
             base.Draw(gameTime);
         }

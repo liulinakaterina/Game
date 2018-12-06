@@ -7,16 +7,17 @@ namespace MOTI.Providers
 {
     public static class PlacingProvider
     {
-        public static void PlaceWarriorsOnInitPositions(List<Warrior> warriors, int windowWidth, int windowHeigth)
+        public static void PlaceWarriorsOnInitPositions(List<GameObject> warriors, int windowWidth, int windowHeigth)
         {
             int deltaX = windowWidth - windowWidth / 12;
-            SetCoordinates(warriors.Cast<GameObject>().ToList(), windowHeigth, deltaX);
+            SetCoordinates(warriors, windowHeigth, deltaX);
         }
 
-        public static void PlaceTowersOnInitPositions(List<Tower> towers, int windowWidth, int windowHeigth)
+        public static void PlaceTowersOnInitPositions(List<GameObject> towers, int windowWidth, int windowHeigth)
         {
             int deltaX = windowWidth / 12;
-            SetCoordinates(towers.Cast<GameObject>().ToList(), windowHeigth, deltaX);
+            SetCoordinates(towers, windowHeigth, deltaX);
+            //SetCoordinates(towers.Cast<GameObject>().ToList(), windowHeigth, deltaX);
         }
 
         public static void Scale(List<GameObject> gameObjects, int prefferedSize)
@@ -27,19 +28,19 @@ namespace MOTI.Providers
             }
         }
 
-        public static void ScaleImage(GameObject gameObject, int prefferedSide)
+        public static int GetPrefferedObjectHeigth(int objectCount, int windowHeigth)
+        {
+            int prefferedHeigth = windowHeigth / (objectCount + 2);
+            return prefferedHeigth;
+        }
+
+        private static void ScaleImage(GameObject gameObject, int prefferedSide)
         {
             var width = gameObject.ActualWidth;
             var height = gameObject.ActualHeigth;
 
             var scaledWidth = width * prefferedSide / height;
             gameObject.Size = new Point(scaledWidth, prefferedSide);
-        }
-
-        public static int GetPrefferedObjectHeigth(int objectCount, int windowHeigth)
-        {
-            int prefferedHeigth = windowHeigth / (objectCount + 2);
-            return prefferedHeigth;
         }
 
         private static void SetCoordinates(List<GameObject> gameObjects, int windowHeigth, int xCoordinate)
