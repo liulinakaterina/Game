@@ -118,6 +118,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\EnemiesConfig.cs" />
     <Compile Include="Providers\GameInitializer.cs" />
+    <Compile Include="Providers\PlacingProvider.cs" />
     <Compile Include="Providers\TowerConfig.cs" />
     <Compile Include="Providers\WarriorConfig.cs" />
   </ItemGroup>
@@ -155,7 +156,9 @@
       <Version>6.1.9</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
