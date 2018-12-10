@@ -22,10 +22,12 @@ namespace MOTI.Providers
             {
                 return new Tower()
                 {
-                    TowerImage = contentManager.Load<Texture2D>(towerNames[0]),
+                    Image = contentManager.Load<Texture2D>(towerNames[0]),
                     Power = 0,
                     Reward = 1,
-                    Position = new Point(500, 0)
+                    Position = new Point(500, 0),
+                    ActualWidth = 256,
+                    ActualHeigth = 454
                 };
             }
             set { }
@@ -37,10 +39,12 @@ namespace MOTI.Providers
             {
                 return new Tower()
                 {
-                    TowerImage = contentManager.Load<Texture2D>(towerNames[2]),
+                    Image = contentManager.Load<Texture2D>(towerNames[2]),
                     Power = 0,
                     Reward = 1,
-                    Position = new Point(70, 0)
+                    Position = new Point(70, 0),
+                    ActualHeigth = 502,
+                    ActualWidth = 256
                 };
             }
             set { }
@@ -52,10 +56,12 @@ namespace MOTI.Providers
             {
                 return new Tower()
                 {
-                    TowerImage = contentManager.Load<Texture2D>(towerNames[1]),
+                    Image = contentManager.Load<Texture2D>(towerNames[1]),
                     Power = 0,
                     Reward = 1,
-                    Position = new Point(50, 350)
+                    Position = new Point(50, 350),
+                    ActualHeigth = 512,
+                    ActualWidth = 256
                 };
             }
             set { }

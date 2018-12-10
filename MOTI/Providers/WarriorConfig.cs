@@ -23,7 +23,7 @@ namespace MOTI.Providers
             {
                 return new Warrior()
                 {
-                    WarriorImage = contentManager.Load<Texture2D>(enemy1Names[0]),
+                    Image = contentManager.Load<Texture2D>(enemy1Names[0]),
                     Power = 3,
                     Position = new Point(350, 400),
                     CurrentPosition = new Point(350, 400),
@@ -40,7 +40,7 @@ namespace MOTI.Providers
             {
                 return new Warrior()
                 {
-                    WarriorImage = contentManager.Load<Texture2D>(enemy1Names[1]),
+                    Image = contentManager.Load<Texture2D>(enemy1Names[1]),
                     Power = 3,
                     Position = new Point(700, 400),
                     CurrentPosition = new Point(700, 400),
@@ -57,7 +57,7 @@ namespace MOTI.Providers
             {
                 return new Warrior()
                 {
-                    WarriorImage = contentManager.Load<Texture2D>(enemy1Names[2]),
+                    Image = contentManager.Load<Texture2D>(enemy1Names[2]),
                     Power = 3,
                     Position = new Point(750, 200),
                     CurrentPosition = new Point(750, 200),
@@ -74,7 +74,7 @@ namespace MOTI.Providers
             {
                 return new Warrior()
                 {
-                    WarriorImage = contentManager.Load<Texture2D>(enemy2Names[0]),
+                    Image = contentManager.Load<Texture2D>(enemy2Names[0]),
                     Power = 3,
                     Position = new Point(350, 400),
                     CurrentPosition = new Point(350, 400),
@@ -91,7 +91,7 @@ namespace MOTI.Providers
             {
                 return new Warrior()
                 {
-                    WarriorImage = contentManager.Load<Texture2D>(enemy2Names[1]),
+                    Image = contentManager.Load<Texture2D>(enemy2Names[1]),
                     Power = 3,
                     Position = new Point(700, 400),
                     CurrentPosition = new Point(700, 400),
@@ -108,7 +108,7 @@ namespace MOTI.Providers
             {
                 return new Warrior()
                 {
-                    WarriorImage = contentManager.Load<Texture2D>(enemy2Names[2]),
+                    Image = contentManager.Load<Texture2D>(enemy2Names[2]),
                     Power = 3,
                     Position = new Point(750, 200),
                     CurrentPosition = new Point(750, 200),

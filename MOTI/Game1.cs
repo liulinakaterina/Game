@@ -11,8 +11,8 @@ namespace MOTI
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private GameField gameField;
-        private Texture2D background;
         private Rectangle mainFrame;
+        private DrawProvider drawProvider;
 
         public Game1()
         {
@@ -30,9 +30,18 @@ namespace MOTI
             spriteBatch = new SpriteBatch(GraphicsDevice);
             var gameInitializer = new GameInitializer(Content);
             this.gameField = gameInitializer.GameField;
+            
+            this.mainFrame = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
-            mainFrame = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            background = Content.Load<Texture2D>("field");
+            this.gameField.Backgrounds.Add(GameState.Start, Content.Load<Texture2D>("startMenuField"));
+            this.gameField.Backgrounds.Add(GameState.FirstPlayerTurn, Content.Load<Texture2D>("field"));
+            this.gameField.Backgrounds.Add(GameState.FirstPlayerMoving, Content.Load<Texture2D>("field"));
+            this.gameField.Backgrounds.Add(GameState.SecondPlayerMoving, Content.Load<Texture2D>("field"));
+            this.gameField.Backgrounds.Add(GameState.SecondPlayerTurn, Content.Load<Texture2D>("field"));
+            this.gameField.Backgrounds.Add(GameState.Fight, Content.Load<Texture2D>("field"));
+            this.gameField.Backgrounds.Add(GameState.Result, Content.Load<Texture2D>("gameOverField"));
+
+            this.drawProvider = new DrawProvider(spriteBatch, mainFrame, gameField);
         }
 
         protected override void UnloadContent()
@@ -64,8 +73,9 @@ namespace MOTI
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            this.drawProvider.Draw(this.gameField.GameState);
             //my draw method
-
+            this.drawProvider.Draw(this.gameField.GameState);
             base.Draw(gameTime);
         }
 
@@ -75,7 +85,7 @@ namespace MOTI
             for(int i = 0; i < towers.Count; i++)
             {
                 var sizeSettings = new Rectangle(towers[i].Position.X, towers[i].Position.Y, 150, 200);
-                spriteBatch.Draw(towers[i].TowerImage, sizeSettings, Color.White);
+                spriteBatch.Draw(towers[i].Image, sizeSettings, Color.White);
             }
         }
 
@@ -88,12 +98,12 @@ namespace MOTI
                 if(i == 2)
                 {
                     var sizeSettings = new Rectangle(warriors[i].CurrentPosition.X, warriors[i].CurrentPosition.Y, 120, 140);
-                    spriteBatch.Draw(warriors[i].WarriorImage, sizeSettings, Color.White);
+                    spriteBatch.Draw(warriors[i].Image, sizeSettings, Color.White);
                 }
                 else
                 {
                     var sizeSettings = new Rectangle(warriors[i].CurrentPosition.X, warriors[i].CurrentPosition.Y, 230, 200);
-                    spriteBatch.Draw(warriors[i].WarriorImage, sizeSettings, Color.White);
+                    spriteBatch.Draw(warriors[i].Image, sizeSettings, Color.White);
                 }
             }
         }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MOTI.Models;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MOTI.Providers
 {
@@ -9,7 +8,7 @@ namespace MOTI.Providers
     {
         public static void PlaceWarriorsOnInitPositions(List<GameObject> warriors, int windowWidth, int windowHeigth)
         {
-            int deltaX = windowWidth - windowWidth / 12;
+            int deltaX = windowWidth - 2 * windowWidth / 12;
             SetCoordinates(warriors, windowHeigth, deltaX);
         }
 
@@ -17,7 +16,6 @@ namespace MOTI.Providers
         {
             int deltaX = windowWidth / 12;
             SetCoordinates(towers, windowHeigth, deltaX);
-            //SetCoordinates(towers.Cast<GameObject>().ToList(), windowHeigth, deltaX);
         }
 
         public static void Scale(List<GameObject> gameObjects, int prefferedSize)
