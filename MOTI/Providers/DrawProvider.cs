@@ -23,17 +23,20 @@ namespace MOTI.Providers
         public void Draw(GameState gameState)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(this.GameField.Backgrounds[gameState], this.MainFrame, Color.White);
+            spriteBatch.Draw(this.GameField.Backgrounds[GameState.Result], this.MainFrame, Color.White);
 
             switch(gameState)
             {
                 case GameState.Start:
-                    SetTowersDefaultConfigs(GameField.Towers.Cast<GameObject>().ToList());
-                    SetWarriorsDefaultConfigs(GameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
-                    DrawTowers(GameField.Towers.Cast<GameObject>().ToList());
-                    DrawTowers(GameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+
+                    SetButtonsDefaultConfigs(GameField.Buttons);
+                    Draw(GameField.Buttons.Cast<GameObject>().ToList());
                     break;
                 case GameState.FirstPlayerTurn:
+                    SetTowersDefaultConfigs(GameField.Towers.Cast<GameObject>().ToList());
+                    SetWarriorsDefaultConfigs(GameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+                    Draw(GameField.Towers.Cast<GameObject>().ToList());
+                    Draw(GameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
                     break;
                 case GameState.FirstPlayerMoving:
                     break;
@@ -47,7 +50,7 @@ namespace MOTI.Providers
             spriteBatch.End();
         }
 
-        private void DrawTowers(List<GameObject> gameObjects)
+        private void Draw(List<GameObject> gameObjects)
         {
             for (int i = 0; i < gameObjects.Count; i++)
             {
@@ -74,6 +77,13 @@ namespace MOTI.Providers
             PlacingProvider.PlaceWarriorsOnInitPositions(gameObjects, MainFrame.Width, MainFrame.Height);
             var prefferedImageHigth = PlacingProvider.GetPrefferedObjectHeigth(gameObjects.Count, MainFrame.Height);
             PlacingProvider.Scale(gameObjects.Cast<GameObject>().ToList(), prefferedImageHigth);
+        }
+
+        private void SetButtonsDefaultConfigs(List<Button> buttons)
+        {
+            PlacingProvider.SetButtonSizes(buttons, MainFrame.Width);
+            PlacingProvider.PlaceButtonsOnInitPositions(buttons, MainFrame.Width, MainFrame.Height);
+            
         }
 
 

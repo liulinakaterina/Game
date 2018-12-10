@@ -18,11 +18,27 @@ namespace MOTI.Providers
             SetCoordinates(towers, windowHeigth, deltaX);
         }
 
+        public static void PlaceButtonsOnInitPositions(List<Button> buttons, int windowWidth, int windowHeigth)
+        {
+            SetCoordinates(buttons, windowWidth, windowHeigth);
+        }
+
         public static void Scale(List<GameObject> gameObjects, int prefferedSize)
         {
             foreach(var gameObject in gameObjects)
             {
                 ScaleImage(gameObject, prefferedSize);
+            }
+        }
+
+        public static void SetButtonSizes(List<Button> gameObjects, int windowWidth)
+        {
+            var width = 310;
+            var height = 55;
+
+            foreach (var button in gameObjects)
+            {
+                button.Size = new Point(width, height);
             }
         }
 
@@ -55,5 +71,25 @@ namespace MOTI.Providers
                 currentY += warriorPrefferedHeigth + deltaY;
             }
         }
+
+        private static void SetCoordinates(List<Button> buttons, int windowWidth, int windowHeigth)
+        {
+            var centerX = windowWidth / 2;
+            var centerY = windowHeigth / 2;
+
+            var X = centerX - buttons[0].Size.X / 2;
+            var deltaY = (int)(1.5 * buttons[0].Size.Y);
+            var buttonPanelSize = buttons.Count * buttons[0].Size.Y + (buttons.Count - 1) * deltaY;
+
+            var Y = (windowHeigth - buttonPanelSize) / 2;
+
+            foreach(var button in buttons)
+            {
+                button.Position = new Point(X, Y);
+                Y += deltaY;
+            }
+        }
+
+        
     }
 }

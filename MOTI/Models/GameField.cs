@@ -13,10 +13,12 @@ namespace MOTI.Models
         public int InitWindowHeight { get; set; }
         public GameState GameState { get; set; }
         public Dictionary<GameState, Texture2D> Backgrounds;
+        public List<Button> Buttons;
 
         public GameField()
         {
             this.Backgrounds = new Dictionary<GameState, Texture2D>();
+            this.Buttons = new List<Button>();
         }
     }
 }

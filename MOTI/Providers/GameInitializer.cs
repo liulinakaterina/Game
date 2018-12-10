@@ -11,6 +11,7 @@ namespace MOTI.Providers
         private ContentManager contentManager;
         private EnemiesConfig enemiesConfig;
         private TowerConfig towerConfig;
+        private ButtonConfig buttonConfig;
         private const int WindowWidth = 850;
         private const int WindowHeight = 700;
         private Player player1;
@@ -22,6 +23,7 @@ namespace MOTI.Providers
             this.contentManager = manager;
             this.enemiesConfig = new EnemiesConfig(manager);
             this.towerConfig = new TowerConfig(manager);
+            this.buttonConfig = new ButtonConfig(manager);
             this.InitPlayers();
             this.InitTowers();
         }
@@ -67,7 +69,12 @@ namespace MOTI.Providers
                     GameState = GameState.Start,
                     InitWindowHeight = WindowWidth,
                     InitWindowWidth = WindowHeight,
-                    Towers = this.towers
+                    Towers = this.towers,
+                    Buttons = new List<Button>()
+                    {
+                        this.buttonConfig.PlayButton,
+                        this.buttonConfig.ExitButton
+                    }
                 };
             }
         }
