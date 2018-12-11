@@ -13,8 +13,8 @@ namespace MOTI.ViewModels
         public static bool IsWarriorsDistributionFinished(MouseState mouseState, List<Warrior> warriors, List<Tower> towers)
         {
 
-           // var isAllWarriorsPotentionallyDistributed = true;
-            var isAllWarriorsPotentionallyDistributed = false;
+            var isAllWarriorsPotentionallyDistributed = true;
+           // var isAllWarriorsPotentionallyDistributed = false;
 
             foreach (var warrior in warriors)
             {
@@ -81,19 +81,22 @@ namespace MOTI.ViewModels
 
         private static void Move(MouseState mouseState, Warrior warrior)
         {
-            warrior.Position = new Point(mouseState.Position.X, mouseState.Position.Y);
+            warrior.Position = new Point(mouseState.Position.X - warrior.Size.X /2, mouseState.Position.Y - warrior.Size.Y / 2);
         }
 
         private static bool IsDistributed(Warrior warrior, List<Tower> towers)
         {
             var isIntersects = false;
-            foreach(var tower in towers)
+            var warriorRectangle = new Rectangle(warrior.Position, warrior.Size);
+            foreach (var tower in towers)
             {
-                var rectangle = new Rectangle(tower.Position, tower.Size);
-                isIntersects = rectangle.Contains(warrior.Position);
+                var towerRectangle = new Rectangle(tower.Position, tower.Size);
+                
+                isIntersects = towerRectangle.Intersects(warriorRectangle);
                 if (isIntersects)
                 {
                     warrior.Tower = tower;
+                    break;
                 }
             }
 

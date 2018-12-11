@@ -74,7 +74,7 @@ namespace MOTI.Providers
                 gameField.Towers);
             if(isAllWarriorsDistributed)
             {
-                //Game1.GameField.GameState = GameState.SecondPlayerTurn;
+                Game1.GameField.GameState = GameState.SecondPlayerTurn;
             }
         }
 
