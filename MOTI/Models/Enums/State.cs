@@ -1,8 +1,9 @@
 ﻿namespace MOTI.Models.Enums
 {
-    public enum ButtonState
+    public enum State
     {
         Normal,
+        Released,
         PointerOver,
         Pressed
     }

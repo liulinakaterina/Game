@@ -8,6 +8,7 @@
         SecondPlayerTurn,
         SecondPlayerMoving,
         Fight,
-        Result
+        Result,
+        End
     }
 }

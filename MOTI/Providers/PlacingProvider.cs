@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MOTI.Models;
+using System;
 using System.Collections.Generic;
 
 namespace MOTI.Providers
@@ -31,7 +32,7 @@ namespace MOTI.Providers
             }
         }
 
-        public static void SetButtonSizes(List<Button> gameObjects, int windowWidth)
+        public static void SetButtonSizes(List<Button> gameObjects)
         {
             var width = 310;
             var height = 55;
@@ -70,6 +71,11 @@ namespace MOTI.Providers
                 gameObjects[i].Position = new Point(xCoordinate, currentY);
                 currentY += warriorPrefferedHeigth + deltaY;
             }
+        }
+
+        internal static void Scale<TResult>(Func<IEnumerable<TResult>> cast)
+        {
+            throw new NotImplementedException();
         }
 
         private static void SetCoordinates(List<Button> buttons, int windowWidth, int windowHeigth)

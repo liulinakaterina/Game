@@ -10,42 +10,66 @@ namespace MOTI.Providers
     public class DrawProvider
     {
         private SpriteBatch spriteBatch;
-        public GameField GameField;
-        public Rectangle MainFrame { get; set; }
 
-        public DrawProvider(SpriteBatch spriteBatch, Rectangle mainFrame, GameField gameField)
+        public DrawProvider(SpriteBatch spriteBatch)
         {
             this.spriteBatch = spriteBatch;
-            this.MainFrame = mainFrame;
-            this.GameField = gameField;
         }
 
-        public void Draw(GameState gameState)
+        private GameField gameField
+        {
+            get
+            {
+                return Game1.GameField;
+            }
+        }
+
+        private Rectangle mainFrame
+        {
+            get
+            {
+                return Game1.MainFrame;
+            }
+        }
+
+        public void Draw()
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(this.GameField.Backgrounds[GameState.Result], this.MainFrame, Color.White);
+            spriteBatch.Draw(this.gameField.Backgrounds[gameField.GameState], this.mainFrame, Color.White);
 
-            switch(gameState)
+            switch(gameField.GameState)
             {
                 case GameState.Start:
 
-                    SetButtonsDefaultConfigs(GameField.Buttons);
-                    Draw(GameField.Buttons.Cast<GameObject>().ToList());
+                    //SetButtonsDefaultConfigs(GameField.Buttons);
+                    Draw(gameField.Buttons.Cast<GameObject>().ToList());
                     break;
                 case GameState.FirstPlayerTurn:
-                    SetTowersDefaultConfigs(GameField.Towers.Cast<GameObject>().ToList());
-                    SetWarriorsDefaultConfigs(GameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
-                    Draw(GameField.Towers.Cast<GameObject>().ToList());
-                    Draw(GameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+                    //SetTowersDefaultConfigs(GameField.Towers.Cast<GameObject>().ToList());
+                    //SetWarriorsDefaultConfigs(GameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+                    Draw(gameField.Towers.Cast<GameObject>().ToList());
+                    Draw(gameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+                 
                     break;
                 case GameState.FirstPlayerMoving:
+                    Draw(gameField.Towers.Cast<GameObject>().ToList());
+                    Draw(gameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
                     break;
                 case GameState.SecondPlayerTurn:
+                    Draw(gameField.Towers.Cast<GameObject>().ToList());
+                    Draw(gameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+                    Draw(gameField.Players[1].Enemy.Warriors.Cast<GameObject>().ToList());
                     break;
                 case GameState.SecondPlayerMoving:
                     break;
                 case GameState.Result:
                     break; 
+            }
+
+            if(gameField.GameState == GameState.FirstPlayerTurn)
+            {
+                Game1.GameField.GameState = GameState.FirstPlayerMoving;
+
             }
             spriteBatch.End();
         }
@@ -67,23 +91,22 @@ namespace MOTI.Providers
 
         private void SetTowersDefaultConfigs(List<GameObject> gameObjects)
         {
-            PlacingProvider.PlaceTowersOnInitPositions(gameObjects, MainFrame.Width, MainFrame.Height);
-            var prefferedImageHigth = PlacingProvider.GetPrefferedObjectHeigth(gameObjects.Count, MainFrame.Height);
+            PlacingProvider.PlaceTowersOnInitPositions(gameObjects, mainFrame.Width, mainFrame.Height);
+            var prefferedImageHigth = PlacingProvider.GetPrefferedObjectHeigth(gameObjects.Count, mainFrame.Height);
             PlacingProvider.Scale(gameObjects.Cast<GameObject>().ToList(), prefferedImageHigth);
         }
 
         private void SetWarriorsDefaultConfigs(List<GameObject> gameObjects)
         {
-            PlacingProvider.PlaceWarriorsOnInitPositions(gameObjects, MainFrame.Width, MainFrame.Height);
-            var prefferedImageHigth = PlacingProvider.GetPrefferedObjectHeigth(gameObjects.Count, MainFrame.Height);
+            PlacingProvider.PlaceWarriorsOnInitPositions(gameObjects, mainFrame.Width, mainFrame.Height);
+            var prefferedImageHigth = PlacingProvider.GetPrefferedObjectHeigth(gameObjects.Count, mainFrame.Height);
             PlacingProvider.Scale(gameObjects.Cast<GameObject>().ToList(), prefferedImageHigth);
         }
 
         private void SetButtonsDefaultConfigs(List<Button> buttons)
         {
-            PlacingProvider.SetButtonSizes(buttons, MainFrame.Width);
-            PlacingProvider.PlaceButtonsOnInitPositions(buttons, MainFrame.Width, MainFrame.Height);
-            
+            PlacingProvider.SetButtonSizes(buttons);
+            PlacingProvider.PlaceButtonsOnInitPositions(buttons, mainFrame.Width, mainFrame.Height);
         }
 
 

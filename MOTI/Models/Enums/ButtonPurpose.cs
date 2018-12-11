@@ -2,6 +2,7 @@
 {
     public enum ButtonPurpose
     {
+        None,
         Play,
         Exit
     }
