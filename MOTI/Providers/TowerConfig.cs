@@ -23,7 +23,7 @@ namespace MOTI.Providers
                 return new Tower()
                 {
                     Image = contentManager.Load<Texture2D>(towerNames[0]),
-                    Power = 0,
+                    Power = 4,
                     Reward = 1,
                     Position = new Point(500, 0),
                     ActualWidth = 256,
@@ -57,7 +57,7 @@ namespace MOTI.Providers
                 return new Tower()
                 {
                     Image = contentManager.Load<Texture2D>(towerNames[1]),
-                    Power = 0,
+                    Power = 3,
                     Reward = 1,
                     Position = new Point(50, 350),
                     ActualHeigth = 512,

@@ -49,6 +49,12 @@ namespace MOTI.Providers
             return prefferedHeigth;
         }
 
+        public static void SetWarriorNearTower(Warrior warrior, Tower tower)
+        {
+            warrior.Position = new Point(tower.Position.X + 2 * tower.Size.X,
+                tower.Position.Y);
+        }
+
         private static void ScaleImage(GameObject gameObject, int prefferedSide)
         {
             var width = gameObject.ActualWidth;

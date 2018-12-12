@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using MOTI.Core;
 using MOTI.Models;
 using MOTI.Models.Enums;
 using MOTI.ViewModels;
@@ -49,6 +50,9 @@ namespace MOTI.Providers
                     break;
                 case GameState.SecondPlayerTurn:
                     SetWarriorsDefaultConfigs(gameField.Players[1].Enemy.Warriors.Cast<GameObject>().ToList());
+                    WaitComputerThinking();
+                    break;
+                case GameState.SecondPlayerMoving:
                     break;
             }
         }
@@ -96,6 +100,32 @@ namespace MOTI.Providers
         {
             PlacingProvider.SetButtonSizes(buttons);
             PlacingProvider.PlaceButtonsOnInitPositions(buttons, MainFrame.Width, MainFrame.Height);
+        }
+
+        private void WaitComputerThinking()
+        {
+            var computerPlayer = new ComputerPlayer(gameField.Players[1], gameField.Towers, gameField.Players[0].Enemy.Warriors);
+            var strategy = computerPlayer.GetOptimalStrategy();
+
+            foreach(var tower in strategy.WarriorDistribution)
+            {
+                foreach(var warrior in tower.Value)
+                {
+                    int warriorIndex = gameField.Players[1].Enemy.Warriors.IndexOf(warrior);
+                    gameField.Players[1].Enemy.Warriors[warriorIndex].Tower = tower.Key;
+                }
+            }
+
+            foreach(var warrior in gameField.Players[1].Enemy.Warriors)
+            {
+                PlacingProvider.SetWarriorNearTower(warrior, warrior.Tower);
+            }
+
+            gameField.Players[1].Enemy.IsAllWarriorsInTowers = true;
+            //if (gameField.GameState == GameState.SecondPlayerTurn)
+            //{
+                Game1.GameField.GameState = GameState.SecondPlayerMoving;
+            //}
         }
 
 

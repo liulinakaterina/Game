@@ -61,6 +61,9 @@ namespace MOTI.Providers
                     Draw(gameField.Players[1].Enemy.Warriors.Cast<GameObject>().ToList());
                     break;
                 case GameState.SecondPlayerMoving:
+                    Draw(gameField.Towers.Cast<GameObject>().ToList());
+                    Draw(gameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+                    Draw(gameField.Players[1].Enemy.Warriors.Cast<GameObject>().ToList());
                     break;
                 case GameState.Result:
                     break; 
@@ -69,8 +72,9 @@ namespace MOTI.Providers
             if(gameField.GameState == GameState.FirstPlayerTurn)
             {
                 Game1.GameField.GameState = GameState.FirstPlayerMoving;
-
             }
+
+            
             spriteBatch.End();
         }
 

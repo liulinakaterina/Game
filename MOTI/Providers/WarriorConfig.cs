@@ -24,7 +24,7 @@ namespace MOTI.Providers
                 return new Warrior()
                 {
                     Image = contentManager.Load<Texture2D>(enemy1Names[0]),
-                    Power = 3,
+                    Power = 5,
                     Position = new Point(350, 400),
                     ActualHeigth = 900,
                     ActualWidth = 740
@@ -40,7 +40,7 @@ namespace MOTI.Providers
                 return new Warrior()
                 {
                     Image = contentManager.Load<Texture2D>(enemy1Names[1]),
-                    Power = 3,
+                    Power = 8,
                     Position = new Point(700, 400),
                     ActualHeigth = 1000,
                     ActualWidth = 900
@@ -56,7 +56,7 @@ namespace MOTI.Providers
                 return new Warrior()
                 {
                     Image = contentManager.Load<Texture2D>(enemy1Names[2]),
-                    Power = 3,
+                    Power = 1,
                     Position = new Point(750, 200),
                     ActualHeigth = 1100,
                     ActualWidth = 720
@@ -72,7 +72,7 @@ namespace MOTI.Providers
                 return new Warrior()
                 {
                     Image = contentManager.Load<Texture2D>(enemy2Names[0]),
-                    Power = 3,
+                    Power = 5,
                     Position = new Point(350, 400),
                     ActualHeigth = 700,
                     ActualWidth = 900
