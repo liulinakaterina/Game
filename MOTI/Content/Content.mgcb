@@ -73,6 +73,13 @@
 /processorParam:TextureFormat=Color
 /build:Images/field.jpg
 
+#begin Images/FontArial.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Images/FontArial.spritefont
+
 #begin Images/fox.png
 /importer:TextureImporter
 /processor:TextureProcessor

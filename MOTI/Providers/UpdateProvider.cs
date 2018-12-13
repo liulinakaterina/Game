@@ -32,7 +32,7 @@ namespace MOTI.Providers
             }
         }
 
-        public void UpdateGame(MouseState mouseState)
+        public void UpdateGame(MouseState mouseState, Keys[] pressedKeys)
         {
             switch (gameField.GameState)
             {
@@ -51,10 +51,22 @@ namespace MOTI.Providers
                 case GameState.SecondPlayerTurn:
                     SetWarriorsDefaultConfigs(gameField.Players[1].Enemy.Warriors.Cast<GameObject>().ToList());
                     WaitComputerThinking();
+                    DefineWinner();
                     break;
-                case GameState.SecondPlayerMoving:
+                case GameState.Result:
                     break;
             }
+
+            if(pressedKeys.Contains(Keys.Escape))
+            {
+                Game1.InitGameField();
+                Game1.GameField.GameState = GameState.Start;
+            }
+            else if(pressedKeys.Contains(Keys.Enter))
+            {
+                Game1.GameField.GameState = GameState.Result;
+            }
+
         }
 
         private void UpdateButtons(MouseState mouseState)
@@ -115,17 +127,64 @@ namespace MOTI.Providers
                     gameField.Players[1].Enemy.Warriors[warriorIndex].Tower = tower.Key;
                 }
             }
-
+            var distance = 0;
             foreach(var warrior in gameField.Players[1].Enemy.Warriors)
             {
-                PlacingProvider.SetWarriorNearTower(warrior, warrior.Tower);
+                PlacingProvider.SetWarriorNearTower(warrior, warrior.Tower, distance);
+                distance += warrior.Size.X / 2;
             }
 
             gameField.Players[1].Enemy.IsAllWarriorsInTowers = true;
-            //if (gameField.GameState == GameState.SecondPlayerTurn)
-            //{
-                Game1.GameField.GameState = GameState.SecondPlayerMoving;
-            //}
+            if (gameField.GameState == GameState.SecondPlayerTurn)
+            {
+              Game1.GameField.GameState = GameState.SecondPlayerMoving;
+            }
+        }
+
+        private void DefineWinner()
+        {
+            var firstPlayer = CalculateArmyReward(Game1.GameField.Players[0].Enemy.Warriors, Game1.GameField.Players[1].Enemy.Warriors);
+            var secondPlayer = CalculateArmyReward(Game1.GameField.Players[1].Enemy.Warriors, Game1.GameField.Players[0].Enemy.Warriors);
+            Game1.GameField.Players[0].CurrentScore = firstPlayer;
+            Game1.GameField.Players[1].CurrentScore = secondPlayer;
+
+            if (firstPlayer > secondPlayer)
+            {
+                Game1.GameField.Players[0].PlayerProgress = PlayerProgress.Winner;
+                Game1.GameField.Players[1].PlayerProgress = PlayerProgress.Looser;
+            }
+            else if(firstPlayer > secondPlayer)
+            {
+                Game1.GameField.Players[0].PlayerProgress = PlayerProgress.Looser;
+                Game1.GameField.Players[0].PlayerProgress = PlayerProgress.Winner;
+            }
+            else
+            {
+                Game1.GameField.Players[0].PlayerProgress = PlayerProgress.None;
+                Game1.GameField.Players[0].PlayerProgress = PlayerProgress.None;
+            }
+        }
+
+        private int CalculateArmyReward(List<Warrior> warriors, List<Warrior> enemies)
+        {
+            int reward = 0;
+
+            var warriosVariant = new Variant(warriors.Count);
+            var enemyVariant = new Variant(enemies.Count);
+
+            foreach(var warrior in warriors)
+            {
+                warriosVariant.Add(warrior.Tower, warrior);
+            }
+
+            foreach (var warrior in enemies)
+            {
+                enemyVariant.Add(warrior.Tower, warrior);
+            }
+
+            reward = warriosVariant.GetEfficiency(enemyVariant);
+
+            return reward;
         }
 
 

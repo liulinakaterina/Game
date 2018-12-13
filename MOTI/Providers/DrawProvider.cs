@@ -40,32 +40,39 @@ namespace MOTI.Providers
             switch(gameField.GameState)
             {
                 case GameState.Start:
-
-                    //SetButtonsDefaultConfigs(GameField.Buttons);
                     Draw(gameField.Buttons.Cast<GameObject>().ToList());
                     break;
                 case GameState.FirstPlayerTurn:
-                    //SetTowersDefaultConfigs(GameField.Towers.Cast<GameObject>().ToList());
-                    //SetWarriorsDefaultConfigs(GameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
                     Draw(gameField.Towers.Cast<GameObject>().ToList());
+                    DrawText(gameField.Towers);
                     Draw(gameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
-                 
+                    DrawText(gameField.Players[0].Enemy.Warriors);
+
                     break;
                 case GameState.FirstPlayerMoving:
                     Draw(gameField.Towers.Cast<GameObject>().ToList());
+                    DrawText(gameField.Towers);
                     Draw(gameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+                    DrawText(gameField.Players[0].Enemy.Warriors);
                     break;
                 case GameState.SecondPlayerTurn:
                     Draw(gameField.Towers.Cast<GameObject>().ToList());
+                    DrawText(gameField.Towers);
                     Draw(gameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+                    DrawText(gameField.Players[0].Enemy.Warriors);
                     Draw(gameField.Players[1].Enemy.Warriors.Cast<GameObject>().ToList());
+                    DrawText(gameField.Players[1].Enemy.Warriors, false);
                     break;
                 case GameState.SecondPlayerMoving:
                     Draw(gameField.Towers.Cast<GameObject>().ToList());
+                    DrawText(gameField.Towers);
                     Draw(gameField.Players[0].Enemy.Warriors.Cast<GameObject>().ToList());
+                    DrawText(gameField.Players[0].Enemy.Warriors);
                     Draw(gameField.Players[1].Enemy.Warriors.Cast<GameObject>().ToList());
+                    DrawText(gameField.Players[1].Enemy.Warriors, false);
                     break;
                 case GameState.Result:
+                    PrintResult();
                     break; 
             }
 
@@ -91,6 +98,75 @@ namespace MOTI.Providers
 
                 spriteBatch.Draw(gameObjects[i].Image, sizeSettings, Color.White);
             }
+        }
+
+        private void DrawText(List<Tower> towers)
+        {
+            foreach(var tower in towers)
+            {
+                spriteBatch.DrawString(Game1.SpriteFont, "+ " + tower.Reward.ToString(), new Vector2(tower.Position.X - 10, tower.Position.Y), Color.White);
+                spriteBatch.DrawString(Game1.SpriteFont, "- " + tower.Power.ToString(), new Vector2(tower.Position.X - 10, tower.Position.Y + tower.Size.Y), Color.Red);
+            }
+        }
+
+        private void DrawText(List<Warrior> warriors, bool isFriend = true)
+        {
+            foreach (var warrior in warriors)
+            {
+                if(!isFriend)
+                {
+                    spriteBatch.DrawString(Game1.SpriteFont, "- " + warrior.Power.ToString(), new Vector2(warrior.Position.X + warrior.Size.X / 2, warrior.Position.Y - 18), Color.DarkRed);
+                }
+                else
+                {
+                    spriteBatch.DrawString(Game1.SpriteFont, "+ " + warrior.Power.ToString(), new Vector2(warrior.Position.X + warrior.Size.X / 2, warrior.Position.Y - 18), Color.Blue);
+                }
+            }
+        }
+
+        private void PrintResult()
+        {
+            var firstPlayer = Game1.GameField.Players[0];
+            var secondPlayer = Game1.GameField.Players[1];
+            var firstColor = Color.White;
+            var secondColor = Color.White;
+            var message = "Friendship won the quest!";
+
+            if (firstPlayer.PlayerProgress == PlayerProgress.Looser)
+            {
+                firstColor = Color.Red;
+                secondColor = Color.Gold;
+                message = "You LOST!";
+            }
+            else if(firstPlayer.PlayerProgress == PlayerProgress.Winner)
+            {
+                firstColor = Color.Gold;
+                secondColor = Color.Red;
+                message = "YOU WON!";
+            }
+            spriteBatch.DrawString(Game1.SpriteFont,
+                "YOU",
+                new Vector2(100, 50),
+                firstColor);
+            spriteBatch.DrawString(Game1.SpriteFont, 
+                Game1.GameField.Players[0].CurrentScore.ToString(), 
+                new Vector2(100, mainFrame.Height / 2),
+                firstColor);
+
+            spriteBatch.DrawString(Game1.SpriteFont, 
+                message, 
+                new Vector2(mainFrame.Width / 2 - 50, mainFrame.Height / 2), 
+                firstColor);
+
+            spriteBatch.DrawString(Game1.SpriteFont,
+                "COMPUTER",
+                new Vector2(mainFrame.Width - 200, 50),
+                secondColor);
+
+            spriteBatch.DrawString(Game1.SpriteFont,
+                Game1.GameField.Players[1].CurrentScore.ToString(),
+                new Vector2(mainFrame.Width - 200, mainFrame.Height / 2),
+                secondColor);
         }
 
         private void SetTowersDefaultConfigs(List<GameObject> gameObjects)

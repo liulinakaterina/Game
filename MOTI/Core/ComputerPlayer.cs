@@ -165,18 +165,15 @@ namespace MOTI.Core
 
                 var armyPower = tower.Value.Select(x => x.Power).Sum();
 
-                var currentPoints = armyPower - enemyPowerInTower - tower.Key.Power;
-
-                points += currentPoints;
+                var currentPoints = armyPower - enemyPowerInTower;
 
                 if(currentPoints > 0)
                 {
-                    points += tower.Key.Reward;
+                    points += tower.Key.Reward - tower.Key.Power + enemyPowerInTower;
                 }
-
-                if(currentPoints < 0)
+                else
                 {
-                    points -= tower.Key.Reward;
+                    points += -tower.Key.Reward + tower.Key.Power - armyPower;
                 }
             }
 

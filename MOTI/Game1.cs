@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MOTI.Core;
@@ -12,7 +13,8 @@ namespace MOTI
     {
         public static GameField GameField;
         public static Rectangle MainFrame;
-
+        public static SpriteFont SpriteFont;
+        public static ContentManager ContentManager;
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private DrawProvider drawProvider;
@@ -22,6 +24,7 @@ namespace MOTI
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content/Images";
+            ContentManager = Content;
         }
 
         protected override void Initialize()
@@ -32,21 +35,26 @@ namespace MOTI
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            var gameInitializer = new GameInitializer(Content);
-            GameField = gameInitializer.GameField;
-            
+            InitGameField();
             MainFrame = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-
-            GameField.Backgrounds.Add(GameState.Start, Content.Load<Texture2D>("startMenuField"));
-            GameField.Backgrounds.Add(GameState.FirstPlayerTurn, Content.Load<Texture2D>("field"));
-            GameField.Backgrounds.Add(GameState.FirstPlayerMoving, Content.Load<Texture2D>("field"));
-            GameField.Backgrounds.Add(GameState.SecondPlayerMoving, Content.Load<Texture2D>("field"));
-            GameField.Backgrounds.Add(GameState.SecondPlayerTurn, Content.Load<Texture2D>("field"));
-            GameField.Backgrounds.Add(GameState.Fight, Content.Load<Texture2D>("field"));
-            GameField.Backgrounds.Add(GameState.Result, Content.Load<Texture2D>("gameOverField"));
+            SpriteFont = Content.Load<SpriteFont>("FontArial");
 
             this.drawProvider = new DrawProvider(spriteBatch);
             this.updateProvider = new UpdateProvider();
+        }
+
+        public static void InitGameField()
+        {
+            var gameInitializer = new GameInitializer(ContentManager);
+
+            GameField = gameInitializer.GameField;
+            GameField.Backgrounds.Add(GameState.Start, ContentManager.Load<Texture2D>("startMenuField"));
+            GameField.Backgrounds.Add(GameState.FirstPlayerTurn, ContentManager.Load<Texture2D>("field"));
+            GameField.Backgrounds.Add(GameState.FirstPlayerMoving, ContentManager.Load<Texture2D>("field"));
+            GameField.Backgrounds.Add(GameState.SecondPlayerMoving, ContentManager.Load<Texture2D>("field"));
+            GameField.Backgrounds.Add(GameState.SecondPlayerTurn, ContentManager.Load<Texture2D>("field"));
+            GameField.Backgrounds.Add(GameState.Fight, ContentManager.Load<Texture2D>("field"));
+            GameField.Backgrounds.Add(GameState.Result, ContentManager.Load<Texture2D>("gameOverField"));
         }
 
         protected override void UnloadContent()
@@ -58,23 +66,8 @@ namespace MOTI
         {
             base.Update(gameTime);
             var mouseState = Mouse.GetState();
-            this.updateProvider.UpdateGame(mouseState);
-            //switch (GameField.GameState)
-            //{
-            //    case GameState.Start:
-            //        break;
-            //    case GameState.FirstPlayerTurn:
-            //        break;
-            //    case GameState.SecondPlayerTurn:
-            //        break;
-            //    case GameState.Fight:
-            //        break;
-            //    case GameState.Result:
-            //        break;
-            //}
-
-
-            
+            var keyPress = Keyboard.GetState().GetPressedKeys();
+            this.updateProvider.UpdateGame(mouseState, keyPress);            
         }
 
         protected override void Draw(GameTime gameTime)
@@ -82,8 +75,6 @@ namespace MOTI
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             this.drawProvider.Draw();
-            //my draw method
-            //this.drawProvider.Draw(GameField.GameState);
             base.Draw(gameTime);
         }
 

@@ -49,9 +49,9 @@ namespace MOTI.Providers
             return prefferedHeigth;
         }
 
-        public static void SetWarriorNearTower(Warrior warrior, Tower tower)
+        public static void SetWarriorNearTower(Warrior warrior, Tower tower, int distanceX)
         {
-            warrior.Position = new Point(tower.Position.X + 2 * tower.Size.X,
+            warrior.Position = new Point(tower.Position.X + 2 * tower.Size.X + distanceX,
                 tower.Position.Y);
         }
 
